@@ -2,6 +2,8 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
+import Colors from './colors';
+
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 
@@ -14,18 +16,22 @@ const Routes = createAppContainer(
       Cart,
     },
     {
-      defaultNavigationOptions: {
+      defaultNavigationOptions: (navigation) => ({
+        // Substitui o cabeçalho padrão por um componente customizado
+        header: () => <Header {...navigation} />,
+
         // headerTitleAlign: 'center',
         // headerStyle: {
         //   backgroundColor: '#7159c1',
         // },
-        // header: () => <Header />,
         // headerTintColor: '#fff',
         // headerBackTitleVisible: false,
+        // gestureDirection: 'horizontal',
+        // cardStyleInterpolator: forHorizontalModal,
         cardStyle: {
-          backgroundColor: '#191920',
+          backgroundColor: Colors.darkBackground,
         },
-      },
+      }),
     }
   )
 );

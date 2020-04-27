@@ -1,23 +1,32 @@
 import React from 'react';
-import { View } from 'react-native';
+// import { Text } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+// import Icon from '../Icon';
 
-import { Container, Cart, Logo } from './styles';
+import {
+  Container,
+  Logo,
+  Cart,
+  CartIcon,
+  CartTextCircle,
+  CartText,
+} from './styles';
 
-function Header() {
+function Header({ navigation }) {
   return (
     <Container>
       <Logo />
 
-      {/* <Cart to="/cart">
-        <div>
-          <strong>Meu carrinho</strong>
-          <span>3 itens</span>
-        </div>
-
-        <MdShoppingBasket size={36} color="#FFF" />
-      </Cart> */}
+      <Cart
+        onPress={() => {
+          navigation.navigate('Cart');
+        }}
+      >
+        <CartIcon />
+        <CartTextCircle>
+          <CartText>3</CartText>
+        </CartTextCircle>
+      </Cart>
     </Container>
   );
 }
