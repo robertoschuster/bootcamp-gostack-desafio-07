@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import { Text } from 'react-native';
 
 import { Container } from './styles';
 
@@ -12,6 +13,12 @@ export default function Cart({ navigation }) {
     </Container>
   );
 }
+
+Cart.propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 Cart.navigationOptions = {
   title: 'Carrinho',

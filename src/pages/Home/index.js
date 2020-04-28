@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import {
   Container,
   ListWrapper,
@@ -89,6 +91,12 @@ export default class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 Home.navigationOptions = {
   title: 'Loja',

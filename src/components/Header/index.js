@@ -3,6 +3,8 @@ import React from 'react';
 
 // import Icon from '../Icon';
 
+import PropTypes from 'prop-types';
+
 import {
   Container,
   Logo,
@@ -30,5 +32,15 @@ function Header({ navigation }) {
     </Container>
   );
 }
+
+Header.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+// Header.defaultProps = {
+//   prop1: { foobar: 'foobar' },
+// };
 
 export default Header;
