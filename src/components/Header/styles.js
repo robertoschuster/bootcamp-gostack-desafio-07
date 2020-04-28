@@ -33,7 +33,7 @@ export const Cart = styled.TouchableOpacity`
 
 export const CartIcon = styled(Icon).attrs({
   name: 'shopping-basket',
-  color: '#ccc',
+  color: '#FFF',
   size: 25,
 })``;
 
