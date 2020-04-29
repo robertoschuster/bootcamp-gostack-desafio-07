@@ -1,9 +1,10 @@
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import Icon from '../../components/Icon';
+import colors from '../../styles/colors';
 
 export const Container = styled.View`
-  background: #fff;
+  background: ${colors.light};
   flex: 1;
   padding: 10px;
   margin: 10px;
@@ -37,7 +38,7 @@ export const ProductInfo = styled.View`
 export const ProductImage = styled.Image`
   height: 80px;
   width: 80px;
-  background: #999;
+  background: ${colors.grey};
   border-radius: 4px;
 `;
 
@@ -50,11 +51,11 @@ export const ProductText = styled.View`
 `;
 
 export const ProductTitle = styled.Text`
-  color: #191920;
+  color: ${colors.dark};
 `;
 
 export const ProductPrice = styled.Text`
-  color: #191920;
+  color: ${colors.dark};
   font-size: 16px;
   font-weight: bold;
   margin-top: 5px;
@@ -66,7 +67,7 @@ export const ProductRemove = styled.TouchableOpacity`
 
 export const ProductRemoveIcon = styled(Icon).attrs({
   name: 'delete-forever',
-  color: '#7159c1',
+  color: colors.primary,
   size: 24,
 })``;
 
@@ -75,7 +76,7 @@ export const ProductRemoveIcon = styled(Icon).attrs({
  */
 
 export const ProductControls = styled.View`
-  background: #eee;
+  background: ${colors.lightGrey};
   padding: 6px;
   border-radius: 4px;
   display: flex;
@@ -89,7 +90,7 @@ export const ProductSub = styled.TouchableOpacity`
 
 export const ProductSubIcon = styled(Icon).attrs({
   name: 'remove-circle-outline',
-  color: '#7159c1',
+  color: colors.primary,
   size: 24,
 })``;
 
@@ -99,13 +100,13 @@ export const ProductAdd = styled.TouchableOpacity`
 
 export const ProductAddIcon = styled(Icon).attrs({
   name: 'add-circle-outline',
-  color: '#7159c1',
+  color: colors.primary,
   size: 24,
 })``;
 
 export const ProductInput = styled.Text`
-  color: #191920;
-  background: #fff;
+  color: ${colors.dark};
+  background: ${colors.light};
   border-radius: 4px;
   padding: 6px;
   border: 1px solid #ddd;
@@ -113,7 +114,7 @@ export const ProductInput = styled.Text`
 `;
 
 export const ProductSubtotal = styled.Text`
-  color: #191920;
+  color: ${colors.dark};
   font-size: 16px;
   font-weight: bold;
   margin-left: auto;
@@ -134,13 +135,13 @@ export const Total = styled.View`
 `;
 
 export const TotalText = styled.Text`
-  color: #999;
+  color: ${colors.grey};
   font-weight: bold;
   font-size: 16px;
 `;
 
 export const TotalAmount = styled.Text`
-  color: #191920;
+  color: ${colors.dark};
   font-weight: bold;
   font-size: 30px;
 `;
@@ -151,7 +152,7 @@ export const TotalAmount = styled.Text`
 
 export const CheckoutButton = styled.TouchableOpacity`
   margin-top: 10px;
-  background: #7159c1;
+  background: ${colors.primary};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -161,12 +162,12 @@ export const CheckoutButton = styled.TouchableOpacity`
 
 export const CheckoutIcon = styled(Icon).attrs({
   name: 'done',
-  color: '#fff',
+  color: colors.light,
   size: 24,
 })``;
 
 export const CheckoutButtonText = styled.Text`
-  color: #fff;
+  color: ${colors.light};
   font-weight: bold;
   padding: 12px;
 `;

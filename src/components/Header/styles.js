@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import logo from '../../assets/images/logo.png';
 
 import Icon from '../Icon';
+import colors from '../../styles/colors';
 
 /**
  * Logo
@@ -33,12 +34,12 @@ export const Cart = styled.TouchableOpacity`
 
 export const CartIcon = styled(Icon).attrs({
   name: 'shopping-basket',
-  color: '#FFF',
+  color: colors.light,
   size: 25,
 })``;
 
 export const CartTextCircle = styled.View`
-  background: #7159c1;
+  background: ${colors.primary};
   height: 20px;
   width: 20px;
   border-radius: 10px;
@@ -49,9 +50,9 @@ export const CartTextCircle = styled.View`
   position: relative;
   top: -8px;
   left: -10px;
-  /* border: 0.8px solid #fff; */
+  border: 0.8px solid ${colors.primary};
 `;
 
 export const CartText = styled.Text`
-  color: #fff;
+  color: ${colors.light};
 `;

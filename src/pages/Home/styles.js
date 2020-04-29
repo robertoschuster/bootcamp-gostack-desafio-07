@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { darken } from 'polished';
 import Icon from '../../components/Icon';
-
+import colors from '../../styles/colors';
 /**
  * Home
  */
@@ -25,7 +25,7 @@ export const List = styled(FlatList).attrs({
 })``;
 
 export const Product = styled.View`
-  background: #fff;
+  background: ${colors.light};
   padding: 10px;
   margin: 10px;
   border-radius: 4px;
@@ -35,7 +35,7 @@ export const Product = styled.View`
 export const Image = styled.Image`
   height: 200px;
   width: 200px;
-  background: #999;
+  background: ${colors.grey};
   border-radius: 4px;
 `;
 
@@ -52,7 +52,7 @@ export const Price = styled.Text`
 /** Botão */
 
 export const Button = styled.TouchableOpacity`
-  background: #7159c1;
+  background: ${colors.primary};
   flex-direction: row;
   align-items: center;
   border-radius: 4px;
@@ -61,7 +61,7 @@ export const Button = styled.TouchableOpacity`
 
 export const ButtonAmount = styled.View`
   padding: 12px;
-  background: ${darken(0.03, '#7159c1')};
+  background: ${darken(0.03, colors.primary)};
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   flex-direction: row;
@@ -70,18 +70,18 @@ export const ButtonAmount = styled.View`
 
 export const ButtonIcon = styled(Icon).attrs({
   name: 'add-shopping-cart',
-  color: '#FFF',
+  color: colors.light,
   size: 25,
 })``;
 
 export const ButtonAddText = styled.Text`
   flex: 1;
-  color: #fff;
+  color: ${colors.light};
   font-weight: bold;
   text-align: center;
 `;
 
 export const ButtonAmountText = styled.Text`
-  color: #fff;
+  color: ${colors.light};
   margin: 0px 4px 0px 10px;
 `;

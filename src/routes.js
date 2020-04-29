@@ -2,7 +2,7 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import Colors from './colors';
+import colors from './styles/colors';
 
 import Home from './pages/Home';
 import Cart from './pages/Cart';
@@ -29,7 +29,7 @@ const Routes = createAppContainer(
         // gestureDirection: 'horizontal',
         // cardStyleInterpolator: forHorizontalModal,
         cardStyle: {
-          backgroundColor: Colors.darkBackground,
+          backgroundColor: colors.dark,
         },
       }),
     }
