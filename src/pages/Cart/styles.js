@@ -3,6 +3,38 @@ import { FlatList } from 'react-native';
 import Icon from '../../components/Icon';
 import colors from '../../styles/colors';
 
+/**
+ * Empty
+ */
+
+export const EmptyContainer = styled.View`
+  background: ${colors.light};
+  height: 160px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+export const EmptyIcon = styled(Icon).attrs({
+  name: 'remove-shopping-cart',
+  color: colors.lightGrey,
+  size: 70,
+})``;
+
+export const EmptyText = styled.Text`
+  color: ${colors.grey};
+  font-weight: bold;
+  font-size: 22px;
+`;
+
+/**
+ * Cart
+ */
+
 export const Container = styled.View`
   background: ${colors.light};
   flex: 1;

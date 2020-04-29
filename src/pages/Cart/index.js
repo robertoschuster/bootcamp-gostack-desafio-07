@@ -6,6 +6,9 @@ import { bindActionCreators } from 'redux';
 import * as CartActions from '../../store/modules/cart/actions';
 
 import {
+  EmptyContainer,
+  EmptyIcon,
+  EmptyText,
   Container,
   ProductList,
   Product,
@@ -32,13 +35,7 @@ import {
 } from './styles';
 import { formatPrice } from '../../utils/formatt';
 
-function Cart({
-  // navigation,
-  cart,
-  total,
-  updateAmountRequest,
-  removeFromCart,
-}) {
+function Cart({ cart, total, updateAmountRequest, removeFromCart }) {
   function increment(product) {
     updateAmountRequest(product.id, product.amount + 1);
   }
@@ -47,55 +44,68 @@ function Cart({
     updateAmountRequest(product.id, product.amount - 1);
   }
 
-  return (
-    <Container>
-      <ProductList
-        // onEndReachedThreshold={0.2} // Carrega mais itens quando chegar em 20% do fim
-        // onEndReached={this.handleLoadMore} // Função que carrega mais itens
-        // ListFooterComponent={this.renderFooter}
-        // onRefresh={this.refreshList} // Função dispara quando o usuário arrasta a lista pra baixo
-        // refreshing={loading}
-        data={cart}
-        keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => {
-          return (
-            <Product key={item.id}>
-              <ProductInfo>
-                <ProductImage source={{ uri: item.image }} />
-                <ProductText>
-                  <ProductTitle>{item.title}</ProductTitle>
-                  <ProductPrice>{item.priceFormatted}</ProductPrice>
-                </ProductText>
-                <ProductRemove onPress={() => removeFromCart(item.id)}>
-                  <ProductRemoveIcon />
-                </ProductRemove>
-              </ProductInfo>
+  function loadCart() {
+    return (
+      <Container>
+        <ProductList
+          // onEndReachedThreshold={0.2} // Carrega mais itens quando chegar em 20% do fim
+          // onEndReached={this.handleLoadMore} // Função que carrega mais itens
+          // ListFooterComponent={this.renderFooter}
+          // onRefresh={this.refreshList} // Função dispara quando o usuário arrasta a lista pra baixo
+          // refreshing={loading}
+          data={cart}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => {
+            return (
+              <Product key={item.id}>
+                <ProductInfo>
+                  <ProductImage source={{ uri: item.image }} />
+                  <ProductText>
+                    <ProductTitle>{item.title}</ProductTitle>
+                    <ProductPrice>{item.priceFormatted}</ProductPrice>
+                  </ProductText>
+                  <ProductRemove onPress={() => removeFromCart(item.id)}>
+                    <ProductRemoveIcon />
+                  </ProductRemove>
+                </ProductInfo>
 
-              <ProductControls>
-                <ProductSub onPress={() => decrement(item)}>
-                  <ProductSubIcon />
-                </ProductSub>
-                <ProductInput>{item.amount}</ProductInput>
-                <ProductAdd onPress={() => increment(item)}>
-                  <ProductAddIcon />
-                </ProductAdd>
-                <ProductSubtotal>{item.subtotal}</ProductSubtotal>
-              </ProductControls>
-            </Product>
-          );
-        }}
-      />
+                <ProductControls>
+                  <ProductSub onPress={() => decrement(item)}>
+                    <ProductSubIcon />
+                  </ProductSub>
+                  <ProductInput>{item.amount}</ProductInput>
+                  <ProductAdd onPress={() => increment(item)}>
+                    <ProductAddIcon />
+                  </ProductAdd>
+                  <ProductSubtotal>{item.subtotal}</ProductSubtotal>
+                </ProductControls>
+              </Product>
+            );
+          }}
+        />
 
-      <Total>
-        <TotalText>TOTAL</TotalText>
-        <TotalAmount>{total}</TotalAmount>
-      </Total>
-      <CheckoutButton>
-        <CheckoutIcon />
-        <CheckoutButtonText>FINALIZAR PEDIDO</CheckoutButtonText>
-      </CheckoutButton>
-    </Container>
-  );
+        <Total>
+          <TotalText>TOTAL</TotalText>
+          <TotalAmount>{total}</TotalAmount>
+        </Total>
+        <CheckoutButton>
+          <CheckoutIcon />
+          <CheckoutButtonText>FINALIZAR PEDIDO</CheckoutButtonText>
+        </CheckoutButton>
+      </Container>
+    );
+  }
+
+  function loadEmptyCart() {
+    return (
+      <EmptyContainer>
+        <EmptyIcon />
+        <EmptyText>Seu carrinho está vazio.</EmptyText>
+      </EmptyContainer>
+    );
+  }
+
+  return cart.length > 0 ? loadCart() : loadEmptyCart();
 }
 
 Cart.propTypes = {
