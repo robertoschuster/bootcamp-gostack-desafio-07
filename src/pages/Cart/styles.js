@@ -1,17 +1,25 @@
 import styled from 'styled-components/native';
+import { FlatList } from 'react-native';
 import Icon from '../../components/Icon';
 
 export const Container = styled.View`
   background: #fff;
-  /* flex: 1; */
-  padding: 15px;
+  flex: 1;
+  padding: 10px;
   margin: 10px;
   border-radius: 4px;
-
-  /* display: flex;
-  flex-direction: column; */
 `;
 
+export const ProductList = styled(FlatList).attrs({
+  // showsVerticalScrollIndicator: false,
+  // showsHorizontalScrollIndicator: false,
+})`
+  /* background: lightcoral; */
+`;
+
+/**
+ * Product
+ */
 export const Product = styled.View`
   padding: 6px 0;
 `;
@@ -117,10 +125,12 @@ export const ProductSubtotal = styled.Text`
  */
 
 export const Total = styled.View`
-  margin-top: 26px;
+  margin-top: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 6px;
+  /* background: lightseagreen; */
 `;
 
 export const TotalText = styled.Text`
@@ -136,11 +146,11 @@ export const TotalAmount = styled.Text`
 `;
 
 /**
- * Finalizar
+ * Botão Finalizar
  */
 
 export const CheckoutButton = styled.TouchableOpacity`
-  margin-top: 26px;
+  margin-top: 10px;
   background: #7159c1;
   display: flex;
   flex-direction: row;
