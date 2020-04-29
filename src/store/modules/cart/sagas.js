@@ -1,9 +1,11 @@
 import { call, select, put, all, takeLatest } from 'redux-saga/effects';
-// import { toast } from 'react-toastify';
+import { Alert } from 'react-native';
 import api from '../../../services/api';
 // import history from '../../../services/history';
 import { addToCartSuccess, updateAmountSuccess } from './actions';
 import { formatPrice } from '../../../utils/formatt';
+
+import NavigationService from '../../../services/navigation';
 
 function* addToCart({ id }) {
   const product = yield select((state) => state.cart.find((p) => p.id === id));
@@ -16,8 +18,7 @@ function* addToCart({ id }) {
   const amount = currentAmount + 1;
 
   if (amount > stockAmount) {
-    // toast.error('Quantidade solicitada fora de estoque.');
-    console.tron.error('Quantidade solicitada fora de estoque.');
+    Alert.alert('Quantidade solicitada fora de estoque.');
     return;
   }
 
@@ -34,6 +35,8 @@ function* addToCart({ id }) {
     };
 
     yield put(addToCartSuccess(data));
+
+    NavigationService.navigate('Cart');
     // history.push('/cart');
   }
 }
@@ -46,8 +49,7 @@ function* updateAmount({ id, amount }) {
   const stockAmount = stock.data.amount;
 
   if (amount > stockAmount) {
-    // toast.error('Quantidade solicitada fora de estoque.');
-    console.tron.error('Quantidade solicitada fora de estoque.');
+    Alert.alert('Quantidade solicitada fora de estoque.');
     return;
   }
 

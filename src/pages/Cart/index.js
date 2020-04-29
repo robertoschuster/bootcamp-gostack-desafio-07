@@ -102,7 +102,7 @@ Cart.propTypes = {
   navigation: PropTypes.shape({
     getParam: PropTypes.func.isRequired,
   }).isRequired,
-  cart: PropTypes.shape().isRequired,
+  cart: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   total: PropTypes.string.isRequired,
   updateAmountRequest: PropTypes.func.isRequired,
   removeFromCart: PropTypes.func.isRequired,
