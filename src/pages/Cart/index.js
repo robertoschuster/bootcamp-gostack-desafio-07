@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as CartActions from '../../store/modules/cart/actions';
+
 import {
   Container,
   ProductList,
@@ -28,46 +32,20 @@ import {
 } from './styles';
 import { formatPrice } from '../../utils/formatt';
 
-export default function Cart({ navigation }) {
-  // const str = navigation.getParam('value');
+function Cart({
+  // navigation,
+  cart,
+  total,
+  updateAmountRequest,
+  removeFromCart,
+}) {
+  function increment(product) {
+    updateAmountRequest(product.id, product.amount + 1);
+  }
 
-  const products = [
-    {
-      id: 1,
-      title: 'Tênis de Caminhada Leve Confortável',
-      price: 179.9,
-      image:
-        'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
-    },
-    // {
-    //   id: 2,
-    //   title: 'Tênis VR Caminhada Confortável Detalhes Couro Masculino',
-    //   price: 139.9,
-    //   image:
-    //     'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis2.jpg',
-    // },
-    // {
-    //   id: 3,
-    //   title: 'Tênis VR Couro Feminino',
-    //   price: 159.9,
-    //   image:
-    //     'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis3.jpg',
-    // },
-    // {
-    //   id: 4,
-    //   title: 'Tênis VR Couro Feminino',
-    //   price: 159.9,
-    //   image:
-    //     'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis3.jpg',
-    // },
-    // {
-    //   id: 5,
-    //   title: 'Tênis VR Couro Feminino',
-    //   price: 159.9,
-    //   image:
-    //     'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis3.jpg',
-    // },
-  ];
+  function decrement(product) {
+    updateAmountRequest(product.id, product.amount - 1);
+  }
 
   return (
     <Container>
@@ -77,8 +55,8 @@ export default function Cart({ navigation }) {
         // ListFooterComponent={this.renderFooter}
         // onRefresh={this.refreshList} // Função dispara quando o usuário arrasta a lista pra baixo
         // refreshing={loading}
-        data={products}
-        keyExtractor={(prod) => String(prod.id)}
+        data={cart}
+        keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => {
           return (
             <Product key={item.id}>
@@ -86,22 +64,22 @@ export default function Cart({ navigation }) {
                 <ProductImage source={{ uri: item.image }} />
                 <ProductText>
                   <ProductTitle>{item.title}</ProductTitle>
-                  <ProductPrice>{formatPrice(item.price)}</ProductPrice>
+                  <ProductPrice>{item.priceFormatted}</ProductPrice>
                 </ProductText>
-                <ProductRemove>
+                <ProductRemove onPress={() => removeFromCart(item.id)}>
                   <ProductRemoveIcon />
                 </ProductRemove>
               </ProductInfo>
 
               <ProductControls>
-                <ProductSub>
+                <ProductSub onPress={() => decrement(item)}>
                   <ProductSubIcon />
                 </ProductSub>
-                <ProductInput>10</ProductInput>
-                <ProductAdd>
+                <ProductInput>{item.amount}</ProductInput>
+                <ProductAdd onPress={() => increment(item)}>
                   <ProductAddIcon />
                 </ProductAdd>
-                <ProductSubtotal>R$ 0,00</ProductSubtotal>
+                <ProductSubtotal>{item.subtotal}</ProductSubtotal>
               </ProductControls>
             </Product>
           );
@@ -110,7 +88,7 @@ export default function Cart({ navigation }) {
 
       <Total>
         <TotalText>TOTAL</TotalText>
-        <TotalAmount>R$ 999,00</TotalAmount>
+        <TotalAmount>{total}</TotalAmount>
       </Total>
       <CheckoutButton>
         <CheckoutIcon />
@@ -124,8 +102,31 @@ Cart.propTypes = {
   navigation: PropTypes.shape({
     getParam: PropTypes.func.isRequired,
   }).isRequired,
+  cart: PropTypes.shape().isRequired,
+  total: PropTypes.string.isRequired,
+  updateAmountRequest: PropTypes.func.isRequired,
+  removeFromCart: PropTypes.func.isRequired,
 };
 
 Cart.navigationOptions = {
   title: 'Carrinho',
 };
+
+const mapStateToProps = (state) => ({
+  cart: state.cart.map((product) => ({
+    ...product,
+    priceFormatted: formatPrice(product.price),
+    subtotal: formatPrice(product.price * product.amount),
+  })),
+
+  total: formatPrice(
+    state.cart.reduce((total, product) => {
+      return total + product.price * product.amount;
+    }, 0)
+  ),
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
