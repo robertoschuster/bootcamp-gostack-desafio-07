@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import api from '../../services/api';
 
 import {
   Container,
@@ -45,6 +46,17 @@ export default class Home extends Component {
       },
     ],
   };
+
+  async componentDidMount() {
+    const response = await api.get('products');
+
+    const data = response.data.map((product) => ({
+      ...product,
+      priceFormatted: formatPrice(product.price),
+    }));
+
+    this.setState({ products: data });
+  }
 
   handleNavigate = () => {
     const { navigation } = this.props;
