@@ -46,9 +46,9 @@ export default class Home extends Component {
     ],
   };
 
-  handleNavigate = (str) => {
+  handleNavigate = () => {
     const { navigation } = this.props;
-    navigation.navigate('Cart', { value: str });
+    navigation.navigate('Cart');
   };
 
   refreshList = () => {};
@@ -75,7 +75,7 @@ export default class Home extends Component {
                   <Image source={{ uri: item.image }} />
                   <Title>{item.title}</Title>
                   <Price>{formatPrice(item.price)}</Price>
-                  <Button onPress={() => this.handleNavigate(item)}>
+                  <Button onPress={this.handleNavigate}>
                     <ButtonAmount>
                       <ButtonIcon />
                       <ButtonAmountText>3</ButtonAmountText>
