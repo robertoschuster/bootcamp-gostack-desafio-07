@@ -1,7 +1,5 @@
 import React from 'react';
-// import { Text } from 'react-native';
-
-// import Icon from '../Icon';
+import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
@@ -14,7 +12,7 @@ import {
   CartText,
 } from './styles';
 
-function Header({ navigation }) {
+function Header({ navigation, cartSize }) {
   return (
     <Container>
       <Logo />
@@ -26,7 +24,7 @@ function Header({ navigation }) {
       >
         <CartIcon />
         <CartTextCircle>
-          <CartText>3</CartText>
+          <CartText>{cartSize}</CartText>
         </CartTextCircle>
       </Cart>
     </Container>
@@ -37,10 +35,13 @@ Header.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
+  cartSize: PropTypes.number.isRequired,
 };
 
 // Header.defaultProps = {
 //   prop1: { foobar: 'foobar' },
 // };
 
-export default Header;
+export default connect((state) => ({
+  cartSize: state.cart.length,
+}))(Header);

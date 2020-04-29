@@ -49,6 +49,7 @@ export const CartTextCircle = styled.View`
   position: relative;
   top: -8px;
   left: -10px;
+  /* border: 0.8px solid #fff; */
 `;
 
 export const CartText = styled.Text`

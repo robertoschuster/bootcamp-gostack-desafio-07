@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as CartActions from '../../store/modules/cart/actions';
+
 import api from '../../services/api';
 
 import {
@@ -19,32 +24,17 @@ import {
 
 import { formatPrice } from '../../utils/formatt';
 
-export default class Home extends Component {
+class Home extends Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+    addToCartRequest: PropTypes.func.isRequired,
+    amount: PropTypes.shape().isRequired,
+  };
+
   state = {
-    loading: false,
-    products: [
-      {
-        id: 1,
-        title: 'Tênis de Caminhada Leve e muito Confortável Confortável',
-        price: 179.9,
-        image:
-          'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
-      },
-      {
-        id: 2,
-        title: 'Tênis VR Caminhada Confortável Detalhes Couro Masculino',
-        price: 139.9,
-        image:
-          'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis2.jpg',
-      },
-      {
-        id: 3,
-        title: 'Tênis VR Couro Feminino',
-        price: 159.9,
-        image:
-          'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis3.jpg',
-      },
-    ],
+    products: [],
   };
 
   async componentDidMount() {
@@ -63,34 +53,39 @@ export default class Home extends Component {
     navigation.navigate('Cart');
   };
 
-  refreshList = () => {};
-
-  handleLoadMore = () => {};
+  handleAddToCart = (id) => {
+    const { addToCartRequest } = this.props;
+    addToCartRequest(id);
+  };
 
   render() {
-    const { products, loading } = this.state;
+    const { products } = this.state;
+    const { amount } = this.props;
+
     return (
       <Container>
         <ListWrapper>
           <List
             horizontal
-            onEndReachedThreshold={0.2} // Carrega mais itens quando chegar em 20% do fim
-            onEndReached={this.handleLoadMore} // Função que carrega mais itens
+            // onEndReachedThreshold={0.2} // Carrega mais itens quando chegar em 20% do fim
+            // onEndReached={this.handleLoadMore} // Função que carrega mais itens
             // ListFooterComponent={this.renderFooter}
-            onRefresh={this.refreshList} // Função dispara quando o usuário arrasta a lista pra baixo
-            refreshing={loading}
+            // onRefresh={this.refreshList} // Função dispara quando o usuário arrasta a lista pra baixo
+            // refreshing={loading}
             data={products}
-            keyExtractor={(prod) => String(prod.id)}
+            keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => {
               return (
                 <Product key={item.id}>
                   <Image source={{ uri: item.image }} />
                   <Title>{item.title}</Title>
                   <Price>{formatPrice(item.price)}</Price>
-                  <Button onPress={this.handleNavigate}>
+                  <Button onPress={() => this.handleAddToCart(item.id)}>
                     <ButtonAmount>
                       <ButtonIcon />
-                      <ButtonAmountText>3</ButtonAmountText>
+                      <ButtonAmountText>
+                        {amount[item.id] || 0}
+                      </ButtonAmountText>
                     </ButtonAmount>
                     <ButtonAddText>ADICIONAR</ButtonAddText>
                   </Button>
@@ -104,12 +99,18 @@ export default class Home extends Component {
   }
 }
 
-Home.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
 Home.navigationOptions = {
   title: 'Loja',
 };
+
+const mapStateToProps = (state) => ({
+  amount: state.cart.reduce((amount, product) => {
+    amount[product.id] = product.amount;
+    return amount;
+  }, {}),
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
